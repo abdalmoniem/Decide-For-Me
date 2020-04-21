@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Decide For Me</string>
+
+    <array name="spin_time_values">
+        <item>Instant</item>
+        <item>Very Short</item>
+        <item>Short</item>
+        <item>Medium</item>
+        <item>Long</item>
+        <item>Very Long</item>
+        <item>Loooooooong</item>
+    </array>
+
+    <string name="about_text">
+        Decide For Me
+        \n
+        Created By
+        \n
+        AbdAlMoniem AlHifnawy
+    </string>
+</resources>

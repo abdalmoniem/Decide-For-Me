@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_rounded_rect_white">
+
+    <TextView
+        android:id="@+id/dialogTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Option"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="casual"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/optionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="Preview Text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="casual"
+                android:textSize="15dp"
+                android:text="Text Color" />
+
+            <com.skydoves.colorpickerview.ColorPickerView
+                android:id="@+id/foregroundColorPickerView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:palette="@drawable/hsv_color_palette"
+                app:selector="@drawable/wheel" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+                android:id="@+id/foregroundAlphaSlideBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor_AlphaSlideBar="@android:color/darker_gray"
+                app:borderSize_AlphaSlideBar="5"
+                app:selector_AlphaSlideBar="@drawable/wheel" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <com.skydoves.colorpickerview.sliders.BrightnessSlideBar
+                android:id="@+id/foregroundBrightnessSlideBar"
+                app:borderSize_BrightnessSlider="5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor_BrightnessSlider="@android:color/darker_gray"
+                app:selector_BrightnessSlider="@drawable/wheel" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="casual"
+                android:textSize="15dp"
+                android:text="Background Color" />
+
+            <com.skydoves.colorpickerview.ColorPickerView
+                android:id="@+id/backgroundColorPickerView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:palette="@drawable/hsv_color_palette"
+                app:selector="@drawable/wheel" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+                android:id="@+id/backgroundAlphaSlideBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor_AlphaSlideBar="@android:color/darker_gray"
+                app:borderSize_AlphaSlideBar="5"
+                app:selector_AlphaSlideBar="@drawable/wheel" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <com.skydoves.colorpickerview.sliders.BrightnessSlideBar
+                android:id="@+id/backgroundBrightnessSlideBar"
+                app:borderSize_BrightnessSlider="5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:borderColor_BrightnessSlider="@android:color/darker_gray"
+                app:selector_BrightnessSlider="@drawable/wheel" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/previewTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="Preview Text"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:fontFamily="casual"
+            android:text="Cancel"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="casual"
+            android:textColor="@color/black"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="casual"
+            android:textColor="@color/black"
+            android:text="OK" />
+
+    </LinearLayout>
+
+</LinearLayout>
