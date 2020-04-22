@@ -27,6 +27,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:maxLines="2"
         android:hint="Preview Text" />
 
     <LinearLayout

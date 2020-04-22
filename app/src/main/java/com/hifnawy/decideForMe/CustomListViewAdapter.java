@@ -1,4 +1,4 @@
-package com.hifnawy.prizewheeldescisionmaker;
+package com.hifnawy.decideForMe;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hifnawy.prizewheeldescisionmaker">
+    package="com.hifnawy.decideForMe">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,9 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:theme="@style/AppThemeFullScreen"/>
+        <activity android:name="com.hifnawy.decideForMe.MainActivity" android:theme="@style/AppThemeFullScreen"/>
 
-        <activity android:name=".WheelSettingsActivity">
+        <activity android:name="com.hifnawy.decideForMe.WheelSettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

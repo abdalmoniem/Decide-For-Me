@@ -1,4 +1,4 @@
-package com.hifnawy.prizewheeldescisionmaker;
+package com.hifnawy.decideForMe;
 
 import org.junit.Test;
 

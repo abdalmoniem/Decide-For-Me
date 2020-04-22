@@ -1,4 +1,4 @@
-package com.hifnawy.prizewheeldescisionmaker;
+package com.hifnawy.decideForMe;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        wheelView = findViewById(R.id.home_prize_wheel_view);
+        wheelView = findViewById(R.id.home_spinning_wheel_view);
 
         textView = findViewById(R.id.textView);
         homeImage = findViewById(R.id.home_image);

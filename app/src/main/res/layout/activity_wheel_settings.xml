@@ -35,9 +35,9 @@
             android:textColor="@color/black" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Spin Wheel"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/app_icon"
             android:onClick="spinWheel" />
     </LinearLayout>
 
@@ -69,6 +69,11 @@
                 android:paddingBottom="10dp"
                 android:background="@drawable/rounded_rect_white_shadow">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,7 +83,16 @@
                     android:textSize="10dp"
                     android:fontFamily="casual"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:tint="#00aa00"
+                        android:src="@drawable/shuffle"
+                        android:onClick="shuffleWheel"/>
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -303,8 +317,8 @@
 
                 <Button
                     android:id="@+id/clearOptionsBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:backgroundTint="#aa0000"
                     android:background="@drawable/clear_icon"
                     android:onClick="clearOptions" />
@@ -315,8 +329,8 @@
 
                 <Button
                     android:id="@+id/addOptionBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:backgroundTint="#00aa00"
                     android:background="@drawable/add_icon"
                     android:onClick="addOption" />
