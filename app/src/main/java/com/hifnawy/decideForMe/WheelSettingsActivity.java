@@ -4,12 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -27,14 +23,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hifnawy.spinningWheelLib.SpinningWheelView;
+import com.hifnawy.spinningWheelLib.WheelEventsListener;
 import com.hifnawy.spinningWheelLib.model.MarkerPosition;
-import com.hifnawy.spinningWheelLib.model.WheelBitmapSection;
-import com.hifnawy.spinningWheelLib.model.WheelColorSection;
-import com.hifnawy.spinningWheelLib.model.WheelDrawableSection;
 import com.hifnawy.spinningWheelLib.model.WheelSection;
 import com.hifnawy.spinningWheelLib.model.WheelTextSection;
 import com.skydoves.colorpickerview.ColorPickerView;
@@ -49,7 +44,6 @@ import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 public class WheelSettingsActivity extends AppCompatActivity {
     final int MAXIMUM_OPTION_CHAR_LENGTH = 20;
@@ -106,7 +100,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         String savedWheelSections = sharedpreferences.getString("savedWheelSections", null);
 
-//        wheelView.reInit();
+       // wheelView.reInit();
 
         optionsLV.setAdapter(itemsAdapter);
 
@@ -131,12 +125,12 @@ public class WheelSettingsActivity extends AppCompatActivity {
         } else {
             List<WheelTextSection> savedWheelTextSections = new Gson().fromJson(savedWheelSections, new TypeToken<ArrayList<WheelTextSection>>() {
             }.getType());
-//            wheelView.setWheelSections(savedWheelTextSections);
+           // wheelView.setWheelSections(savedWheelTextSections);
 
             itemsAdapter.clear();
 
             for (WheelSection ws : savedWheelTextSections) {
-                itemsAdapter.add((WheelTextSection) ws);
+                itemsAdapter.add(ws);
             }
         }
 
@@ -249,8 +243,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-//                wheelView.setInitialFlingDampening(1);
-//                wheelView.setFlingVelocityDampening(1);
+                // wheelView.setInitialFlingDampening(1);
+                // wheelView.setFlingVelocityDampening(1);
+                // wheelView.flingWheel((speed + 1) * 500, 1000 + (1000 * (int) Math.pow(2, speed)), (new Random().nextFloat() > 0.5));
                 wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, speed)), (new Random().nextFloat() > 0.5));
             }
         });
@@ -277,11 +272,11 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         String wheelSectionsJson = "";
 
-//        if (itemsAdapter.getCount() < 1) {
-//            wheelSectionsJson = new Gson().toJson(wheelSections);
-//        } else {
+       // if (itemsAdapter.getCount() < 1) {
+       //     wheelSectionsJson = new Gson().toJson(wheelSections);
+       // } else {
         wheelSectionsJson = new Gson().toJson(itemsAdapter.getItems());
-//        }
+       // }
 
         editor.putString("savedWheelSections", wheelSectionsJson);
 
@@ -410,7 +405,8 @@ public class WheelSettingsActivity extends AppCompatActivity {
                     optionEditText.setSelection(optionEditText.getText().length());
                 }
 
-                previewTextView.setText(optionEditText.getText());            }
+                previewTextView.setText(optionEditText.getText());
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -644,9 +640,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
                 dialog.dismiss();
                 String s = previewTextView.getText().toString();
 
-//                itemsAdapter.add(new WheelTextSection("Item #" + new Random().nextInt(200))
-//                        .setSectionForegroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)))
-//                        .setSectionBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255))));
+               // itemsAdapter.add(new WheelTextSection("Item #" + new Random().nextInt(200))
+               //         .setSectionForegroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)))
+               //         .setSectionBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255))));
 
                 itemsAdapter.add(new WheelTextSection(s)
                         .setSectionForegroundColor(foregroundColor)
@@ -686,9 +682,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
     public void spinWheel(final View view) {
 
-//        final Drawable buttonDrawable = DrawableCompat.wrap(view.getBackground());
-//        DrawableCompat.setTintMode(buttonDrawable, PorterDuff.Mode.SRC_ATOP);
-//        DrawableCompat.setTint(buttonDrawable, 0x55000000);
+       // final Drawable buttonDrawable = DrawableCompat.wrap(view.getBackground());
+       // DrawableCompat.setTintMode(buttonDrawable, PorterDuff.Mode.SRC_ATOP);
+       // DrawableCompat.setTint(buttonDrawable, 0x55000000);
 
         Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.button_fade_out);
         fadeOut.setDuration(100);
@@ -701,7 +697,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                view.setBackground(buttonDrawable);
+               // view.setBackground(buttonDrawable);
 
                 Animation fadeIn = AnimationUtils.loadAnimation(WheelSettingsActivity.this, R.anim.button_fade_in);
                 fadeIn.setDuration(100);
@@ -714,16 +710,16 @@ public class WheelSettingsActivity extends AppCompatActivity {
             }
         });
 
-//        if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
+       // if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
 
-//        wheelView.stopWheel();
+       // wheelView.stopWheel();
 
         Bundle extra = new Bundle();
-//        if (itemsAdapter.getItems().size() < 1) {
-//            extra.putSerializable("sections", (Serializable) wheelSections);
-//        } else {
+       // if (itemsAdapter.getItems().size() < 1) {
+       //     extra.putSerializable("sections", (Serializable) wheelSections);
+       // } else {
         extra.putSerializable("sections", (Serializable) itemsAdapter.getItems());
-//        }
+       // }
 
         extra.putInt("textSize", textSizeSB.getProgress());
         extra.putInt("optionRepeat", (optionRepeatSB.getProgress() + 1));
@@ -732,7 +728,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(WheelSettingsActivity.this, MainActivity.class);
         intent.putExtra("extra", extra);
         startActivity(intent);
-//        }
+       // }
     }
 
     private Point color2Point(int color, float radius) {

@@ -95,9 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
             wheelView.generateWheel();
 
-//            wheelView.setInitialFlingDampening(1);
-//            wheelView.setFlingVelocityDampening(1);
-            wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
+           // wheelView.setInitialFlingDampening(1);
+           // wheelView.setFlingVelocityDampening(1);
+
+           wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
+            // wheelView.flingWheel((spinTime + 1) * 500, 1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
         }
     }
 
@@ -105,14 +107,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        wheelView.reInit();
-
-
+       // wheelView.reInit();
     }
 
     @Override
     protected void onPause() {
-//        wheelView.stopWheel();
+       // wheelView.stopWheel();
 
         super.onPause();
     }
@@ -126,12 +126,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
-//            super.onBackPressed();
-//        } else {
-//            Toast.makeText(this, "please wait until the wheel stops", Toast.LENGTH_SHORT).show();
-//        }
-//        wheelView.stopWheel();
+       // if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
+       //     super.onBackPressed();
+       // } else {
+       //     Toast.makeText(this, "please wait until the wheel stops", Toast.LENGTH_SHORT).show();
+       // }
+       // wheelView.stopWheel();
 
         super.onBackPressed();
     }
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onWheelStopped() {
-//            Toast.makeText(MainActivity.this, "Wheel has just been stopped", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(MainActivity.this, "Wheel has just been stopped", Toast.LENGTH_SHORT).show();
         }
 
         @Override
