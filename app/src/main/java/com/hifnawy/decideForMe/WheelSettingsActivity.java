@@ -30,13 +30,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hifnawy.spinningwheellib.SpinningWheelView;
-import com.hifnawy.spinningwheellib.model.MarkerPosition;
-import com.hifnawy.spinningwheellib.model.WheelBitmapSection;
-import com.hifnawy.spinningwheellib.model.WheelColorSection;
-import com.hifnawy.spinningwheellib.model.WheelDrawableSection;
-import com.hifnawy.spinningwheellib.model.WheelSection;
-import com.hifnawy.spinningwheellib.model.WheelTextSection;
+import com.hifnawy.spinningWheelLib.SpinningWheelView;
+import com.hifnawy.spinningWheelLib.model.MarkerPosition;
+import com.hifnawy.spinningWheelLib.model.WheelBitmapSection;
+import com.hifnawy.spinningWheelLib.model.WheelColorSection;
+import com.hifnawy.spinningWheelLib.model.WheelDrawableSection;
+import com.hifnawy.spinningWheelLib.model.WheelSection;
+import com.hifnawy.spinningWheelLib.model.WheelTextSection;
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorListener;
 import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
@@ -106,7 +106,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         String savedWheelSections = sharedpreferences.getString("savedWheelSections", null);
 
-        wheelView.reInit();
+//        wheelView.reInit();
 
         optionsLV.setAdapter(itemsAdapter);
 
@@ -249,8 +249,8 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                wheelView.setInitialFlingDampening(1);
-                wheelView.setFlingVelocityDampening(1);
+//                wheelView.setInitialFlingDampening(1);
+//                wheelView.setFlingVelocityDampening(1);
                 wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, speed)), (new Random().nextFloat() > 0.5));
             }
         });
@@ -267,7 +267,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        wheelView.stopWheel();
+//        wheelView.stopWheel();
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -716,7 +716,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
 //        if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
 
-        wheelView.stopWheel();
+//        wheelView.stopWheel();
 
         Bundle extra = new Bundle();
 //        if (itemsAdapter.getItems().size() < 1) {

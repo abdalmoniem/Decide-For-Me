@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hifnawy.spinningwheellib.model.WheelSection;
-import com.hifnawy.spinningwheellib.model.WheelTextSection;
+import com.hifnawy.spinningWheelLib.model.WheelSection;
+import com.hifnawy.spinningWheelLib.model.WheelTextSection;
 
 import java.util.ArrayList;
 import java.util.List;

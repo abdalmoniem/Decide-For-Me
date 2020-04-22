@@ -74,24 +74,24 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:text="Preview"
-                    android:textSize="10dp"
-                    android:fontFamily="casual"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="Preview"
+                        android:textSize="10dp"
+                        android:fontFamily="casual"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:tint="#00aa00"
                         android:src="@drawable/shuffle"
-                        android:onClick="shuffleWheel"/>
+                        android:onClick="shuffleWheel" />
                 </LinearLayout>
 
                 <ImageView
@@ -102,7 +102,7 @@
                     android:scaleType="fitXY"
                     android:src="@android:color/darker_gray" />
 
-                <com.hifnawy.spinningwheellib.SpinningWheelView
+                <com.hifnawy.spinningWheelLib.SpinningWheelView
                     android:id="@+id/previewPrizeWheel"
                     android:layout_width="200dp"
                     android:layout_height="200dp" />
@@ -325,7 +325,7 @@
 
                 <Space
                     android:layout_width="10dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/addOptionBtn"

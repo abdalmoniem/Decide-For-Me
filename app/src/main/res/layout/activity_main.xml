@@ -35,11 +35,11 @@
             android:orientation="vertical"
             android:gravity="center_horizontal|center_vertical">
 
-            <com.hifnawy.spinningwheellib.SpinningWheelView
+            <com.hifnawy.spinningWheelLib.SpinningWheelView
                 android:id="@+id/home_spinning_wheel_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-            </com.hifnawy.spinningwheellib.SpinningWheelView>
+            </com.hifnawy.spinningWheelLib.SpinningWheelView>
         </LinearLayout>
 
     </LinearLayout>

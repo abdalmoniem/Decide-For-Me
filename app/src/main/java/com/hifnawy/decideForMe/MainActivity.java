@@ -11,14 +11,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hifnawy.spinningwheellib.DimensionUtil;
-import com.hifnawy.spinningwheellib.SpinningWheelView;
-import com.hifnawy.spinningwheellib.model.MarkerPosition;
-import com.hifnawy.spinningwheellib.model.WheelBitmapSection;
-import com.hifnawy.spinningwheellib.model.WheelColorSection;
-import com.hifnawy.spinningwheellib.model.WheelDrawableSection;
-import com.hifnawy.spinningwheellib.model.WheelSection;
-import com.hifnawy.spinningwheellib.model.WheelTextSection;
+import com.hifnawy.spinningWheelLib.DimensionUtil;
+import com.hifnawy.spinningWheelLib.SpinningWheelView;
+import com.hifnawy.spinningWheelLib.model.MarkerPosition;
+import com.hifnawy.spinningWheelLib.model.WheelBitmapSection;
+import com.hifnawy.spinningWheelLib.model.WheelColorSection;
+import com.hifnawy.spinningWheelLib.model.WheelDrawableSection;
+import com.hifnawy.spinningWheelLib.model.WheelSection;
+import com.hifnawy.spinningWheelLib.model.WheelTextSection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         textViewScaleX = textView.getScaleX();
         textViewScaleY = textView.getScaleY();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        wheelView.reInit();
 
         wheelSections = (List<WheelSection>) getIntent().getBundleExtra("extra").getSerializable("sections");
 
@@ -102,15 +95,24 @@ public class MainActivity extends AppCompatActivity {
 
             wheelView.generateWheel();
 
-            wheelView.setInitialFlingDampening(1);
-            wheelView.setFlingVelocityDampening(1);
+//            wheelView.setInitialFlingDampening(1);
+//            wheelView.setFlingVelocityDampening(1);
             wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
         }
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+//        wheelView.reInit();
+
+
+    }
+
+    @Override
     protected void onPause() {
-        wheelView.stopWheel();
+//        wheelView.stopWheel();
 
         super.onPause();
     }
@@ -129,12 +131,12 @@ public class MainActivity extends AppCompatActivity {
 //        } else {
 //            Toast.makeText(this, "please wait until the wheel stops", Toast.LENGTH_SHORT).show();
 //        }
-        wheelView.stopWheel();
+//        wheelView.stopWheel();
 
         super.onBackPressed();
     }
 
-    private class WheelEventsListener implements com.hifnawy.spinningwheellib.WheelEventsListener {
+    private class WheelEventsListener implements com.hifnawy.spinningWheelLib.WheelEventsListener {
 
         @Override
         public void onWheelStopped() {
