@@ -8,7 +8,8 @@
         android:id="@+id/optionTxtContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_rect_white">
+        android:background="@drawable/rounded_rect_white"
+        android:backgroundTint="@color/green">
 
         <ImageView
             android:layout_width="20dp"
@@ -26,7 +27,8 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:fontFamily="casual"
-            android:text="sample_text"
-            android:textSize="20dp"/>
+            android:textColor="@color/black"
+            android:text="sample text"
+            android:textSize="10dp"/>
     </LinearLayout>
 </LinearLayout>

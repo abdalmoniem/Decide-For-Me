@@ -1,6 +1,10 @@
 # Decide For Me
 
-![](assets/screenshot_1.png) ![](assets/screenshot_2.png)
+<p align="center">
+	<img alt='Screenshot 1' src="assets/screenshot_1.png" width="40%"/>
+	<img alt='Screenshot 2' src="assets/screenshot_2.png" width="40%"/>
+	<br/>
+</p>
 
 ## Introduction
 Have you ever been in a situation where you and your friends can't seem to decide what you want to do and everyone doesn't mind all options? well this is the app for you.

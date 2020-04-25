@@ -95,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
             wheelView.generateWheel();
 
-           // wheelView.setInitialFlingDampening(1);
-           // wheelView.setFlingVelocityDampening(1);
+           wheelView.setInitialFlingDampening(1f);
+           wheelView.setFlingVelocityDampening(1.01f);
 
-           wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
-            // wheelView.flingWheel((spinTime + 1) * 500, 1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
+           // wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
+            wheelView.flingWheel((spinTime + 1) * 1000, 1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
         }
     }
 

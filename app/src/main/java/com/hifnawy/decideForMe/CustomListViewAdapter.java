@@ -18,9 +18,12 @@ import com.hifnawy.spinningWheelLib.model.WheelTextSection;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+
 public class CustomListViewAdapter extends ArrayAdapter<WheelSection> {
 
-    Context mContext;
+    private Context mContext;
+    private ListViewAdapterSizeChangedListner mSizeChangedListener;
     private List<WheelSection> dataSet;
     private int lastPosition = -1;
 
@@ -75,6 +78,24 @@ public class CustomListViewAdapter extends ArrayAdapter<WheelSection> {
         return convertView;
     }
 
+    @Override
+    public void add(@Nullable WheelSection object) {
+        super.add(object);
+
+        if (mSizeChangedListener != null) {
+            mSizeChangedListener.onSizeChanged(this.dataSet.size());
+        }
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+
+        if (mSizeChangedListener != null) {
+            mSizeChangedListener.onSizeChanged(this.dataSet.size());
+        }
+    }
+
     public void updateItem(int index, WheelTextSection ws) {
         dataSet.set(index, ws);
         notifyDataSetChanged();
@@ -83,15 +104,27 @@ public class CustomListViewAdapter extends ArrayAdapter<WheelSection> {
     public void remove(int index) {
         dataSet.remove(index);
         notifyDataSetChanged();
+
+        if (mSizeChangedListener != null) {
+            mSizeChangedListener.onSizeChanged(this.dataSet.size());
+        }
+    }
+
+    public void setItems(List<WheelSection> newWheelSections) {
+        this.dataSet = newWheelSections;
+        notifyDataSetChanged();
+
+        if (mSizeChangedListener != null) {
+            mSizeChangedListener.onSizeChanged(this.dataSet.size());
+        }
     }
 
     public List<WheelSection> getItems() {
         return dataSet;
     }
 
-    public void setDataSet(List<WheelSection> newWheelSections) {
-        this.dataSet = newWheelSections;
-        notifyDataSetChanged();
+    public void setSizeChangedListener(ListViewAdapterSizeChangedListner mSizeChangedListener) {
+        this.mSizeChangedListener = mSizeChangedListener;
     }
 
     // View lookup cache
