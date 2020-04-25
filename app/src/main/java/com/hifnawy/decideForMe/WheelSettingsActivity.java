@@ -213,7 +213,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
                         newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
                     }
 
-
                     wheelView.setWheelSections(newWheelSections);
                     wheelView.generateWheel();
                 }
@@ -276,6 +275,14 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
                 for (WheelSection ws : itemsAdapter.getItems()) {
                     newWheelSections.add(ws);
+                }
+
+                int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
+
+                int difference = preferredSize - newWheelSections.size();
+
+                for (int i = 0; i < difference; i++) {
+                    newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
                 }
 
                 wheelView.setWheelSections(newWheelSections);
@@ -455,6 +462,14 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
                 for (WheelSection ws : itemsAdapter.getItems()) {
                     newWheelSections.add(ws);
+                }
+
+                int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
+
+                int difference = preferredSize - newWheelSections.size();
+
+                for (int i = 0; i < difference; i++) {
+                    newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
                 }
 
                 wheelView.setWheelSections(newWheelSections);
