@@ -17,10 +17,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +42,8 @@ import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class WheelSettingsActivity extends AppCompatActivity {
     final int MAXIMUM_OPTION_CHAR_LENGTH = 20;
@@ -56,7 +56,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
     SeekBar optionRepeatSB;
     TextView spinTimeTV;
     SeekBar spinTimeSB;
-    ListView optionsLV;
+    RecyclerView optionsRV;
     CustomListViewAdapter itemsAdapter;
     int speed = -1;
 
@@ -82,8 +82,8 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         wheelView = findViewById(R.id.previewPrizeWheel);
 
-        optionsLV = findViewById(R.id.optionsLV);
-        itemsAdapter = new CustomListViewAdapter(this, new ArrayList<WheelSection>());
+        optionsRV = findViewById(R.id.optionsLV);
+        itemsAdapter = new CustomListViewAdapter(this);
 
         itemsAdapter.setSizeChangedListener(new ListViewAdapterSizeChangedListner() {
             @Override
@@ -96,6 +96,39 @@ public class WheelSettingsActivity extends AppCompatActivity {
                 } else {
                     optionRepeatSB.setEnabled(true);
                 }
+            }
+        });
+
+        itemsAdapter.setItemClickListener(new RecyclerViewItemClickListner() {
+            @Override
+            public void onItemClicked(int position) {
+                editOption(position);
+            }
+
+            @Override
+            public void onItemLongClicked(int position) {
+                showSnackbar(((WheelTextSection) itemsAdapter.getItem(position)).getText(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getForegroundColor(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getBackgroundColor());
+
+                itemsAdapter.remove(position);
+
+                List<WheelSection> newWheelSections = new ArrayList<>();
+
+                for (WheelSection ws : itemsAdapter.getItems()) {
+                    newWheelSections.add(ws);
+                }
+
+                int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
+
+                int difference = preferredSize - newWheelSections.size();
+
+                for (int i = 0; i < difference; i++) {
+                    newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
+                }
+
+                wheelView.setWheelSections(newWheelSections);
+                wheelView.generateWheel();
             }
         });
 
@@ -114,8 +147,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         String savedWheelSections = sharedpreferences.getString("savedWheelSections", null);
 
-        optionsLV.setAdapter(itemsAdapter);
-
         if (savedWheelSections == null) {
             wheelSections.clear();
             itemsAdapter.clear();
@@ -132,6 +163,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
                         .setSectionBackgroundColor(Color.rgb(bR, bG, bB));
                 wheelSections.add(wts);
                 itemsAdapter.add(wts);
+
             }
             wheelView.setWheelSections(wheelSections);
         } else {
@@ -160,12 +192,12 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         if (savedTextSize == -1) {
             textSizeTV.setText(wheelView.getGlobalTextSize() + " px");
-            textSizeSB.setProgress(wheelView.getGlobalTextSize());
+            textSizeSB.setProgress((wheelView.getGlobalTextSize() - 1));
         } else {
-            textSizeTV.setText(savedTextSize + " px");
+            textSizeTV.setText((savedTextSize + 1) + " px");
             textSizeSB.setProgress(savedTextSize);
 
-            wheelView.setGlobalTextSize(savedTextSize);
+            wheelView.setGlobalTextSize((savedTextSize + 1));
         }
         textSizeSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -190,7 +222,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
             optionRepeatTV.setText("1 time");
             optionRepeatSB.setProgress(0);
         } else {
-            optionRepeatTV.setText((savedOptionRepeat + 1) + " times");
+            optionRepeatTV.setText((savedOptionRepeat + 1) + ((savedOptionRepeat == 0) ? " time" : " times"));
             optionRepeatSB.setProgress(savedOptionRepeat);
         }
         optionRepeatSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -255,41 +287,12 @@ public class WheelSettingsActivity extends AppCompatActivity {
             }
         });
 
-        optionsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-                editOption(position);
-            }
-        });
+        // use a linear layout manager
+        optionsRV.setLayoutManager(new LinearLayoutManager(this));
 
-        optionsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                showSnackbar(((WheelTextSection) itemsAdapter.getItem(position)).getText(),
-                        ((WheelTextSection) itemsAdapter.getItem(position)).getForegroundColor(),
-                        ((WheelTextSection) itemsAdapter.getItem(position)).getBackgroundColor());
+        optionsRV.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(WheelSettingsActivity.this, R.anim.layout_animation_fall_down));
 
-                itemsAdapter.remove(position);
-
-                List<WheelSection> newWheelSections = new ArrayList<>();
-
-                for (WheelSection ws : itemsAdapter.getItems()) {
-                    newWheelSections.add(ws);
-                }
-
-                int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
-
-                int difference = preferredSize - newWheelSections.size();
-
-                for (int i = 0; i < difference; i++) {
-                    newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
-                }
-
-                wheelView.setWheelSections(newWheelSections);
-                wheelView.generateWheel();
-                return true;
-            }
-        });
+        optionsRV.setAdapter(itemsAdapter);
 
         wheelView.generateWheel();
     }
@@ -508,37 +511,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
     }
 
     public void shuffleWheel(View view) {
-        List<WheelSection> newWheelSections = new ArrayList<>();
+        itemsAdapter.shuffle();
 
-        for (int i = 0; i < itemsAdapter.getCount(); i++) {
-            WheelTextSection item = (WheelTextSection) itemsAdapter.getItem(i);
-
-            int bR = new Random().nextInt(255);
-            int bG = new Random().nextInt(255);
-            int bB = new Random().nextInt(255);
-
-            int fR = ~bR;
-            int fG = ~bG;
-            int fB = ~bB;
-
-            itemsAdapter.updateItem(i, new WheelTextSection(item.getText())
-                    .setSectionForegroundColor(Color.rgb(fR, fG, fB))
-                    .setSectionBackgroundColor(Color.rgb(bR, bG, bB)));
-        }
-
-        for (WheelSection ws : itemsAdapter.getItems()) {
-            newWheelSections.add(ws);
-        }
-
-        int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
-
-        int difference = preferredSize - newWheelSections.size();
-
-        for (int i = 0; i < difference; i++) {
-            newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
-        }
-
-        wheelView.setWheelSections(newWheelSections);
+        wheelView.setWheelSections(itemsAdapter.getItems());
 
         wheelView.generateWheel();
     }
