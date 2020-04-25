@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".WheelSettingsActivity"
-    android:background="#efefef">
+    android:background="#efefef"
+    android:id="@+id/rootLayout">
 
     <LinearLayout
         android:id="@+id/linearLayout"

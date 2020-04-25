@@ -23,7 +23,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hifnawy.spinningWheelLib.SpinningWheelView;
@@ -89,6 +91,10 @@ public class WheelSettingsActivity extends AppCompatActivity {
                 if (size >= 8) {
                     optionRepeatSB.setProgress(0);
                     optionRepeatSB.setEnabled(false);
+                    Toast.makeText(WheelSettingsActivity.this,
+                            "number of items is more than 8\noption repeat will be disabled ", Toast.LENGTH_LONG).show();
+                } else {
+                    optionRepeatSB.setEnabled(true);
                 }
             }
         });
@@ -107,8 +113,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
         int savedSpinTime = sharedpreferences.getInt("savedSpinTime", -1);
 
         String savedWheelSections = sharedpreferences.getString("savedWheelSections", null);
-
-        // wheelView.reInit();
 
         optionsLV.setAdapter(itemsAdapter);
 
@@ -133,7 +137,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
         } else {
             List<WheelTextSection> savedWheelTextSections = new Gson().fromJson(savedWheelSections, new TypeToken<ArrayList<WheelTextSection>>() {
             }.getType());
-            // wheelView.setWheelSections(savedWheelTextSections);
 
             itemsAdapter.clear();
 
@@ -248,17 +251,36 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // wheelView.setInitialFlingDampening(1f);
                 wheelView.setFlingVelocityDampening(1.01f);
                 wheelView.flingWheel((speed + 1) * 1000, 1000 + (1000 * (int) Math.pow(2, speed)), (new Random().nextFloat() > 0.5));
-                // wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, speed)), (new Random().nextFloat() > 0.5));
             }
         });
 
         optionsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 editOption(position);
+            }
+        });
+
+        optionsLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                showSnackbar(((WheelTextSection) itemsAdapter.getItem(position)).getText(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getForegroundColor(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getBackgroundColor());
+
+                itemsAdapter.remove(position);
+
+                List<WheelSection> newWheelSections = new ArrayList<>();
+
+                for (WheelSection ws : itemsAdapter.getItems()) {
+                    newWheelSections.add(ws);
+                }
+
+                wheelView.setWheelSections(newWheelSections);
+                wheelView.generateWheel();
+                return true;
             }
         });
 
@@ -267,8 +289,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-//        wheelView.stopWheel();
-
         SharedPreferences.Editor editor = sharedpreferences.edit();
 
         editor.putInt("savedTextSize", textSizeSB.getProgress());
@@ -277,11 +297,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
         String wheelSectionsJson = "";
 
-        // if (itemsAdapter.getCount() < 1) {
-        //     wheelSectionsJson = new Gson().toJson(wheelSections);
-        // } else {
         wheelSectionsJson = new Gson().toJson(itemsAdapter.getItems());
-        // }
 
         editor.putString("savedWheelSections", wheelSectionsJson);
 
@@ -429,7 +445,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                showSnackbar(((WheelTextSection) itemsAdapter.getItem(position)).getText(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getForegroundColor(),
+                        ((WheelTextSection) itemsAdapter.getItem(position)).getBackgroundColor());
 
                 itemsAdapter.remove(position);
 
@@ -441,14 +459,14 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
                 wheelView.setWheelSections(newWheelSections);
                 wheelView.generateWheel();
+
+                dialog.dismiss();
             }
         });
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
-
                 String s = previewTextView.getText().toString();
 
                 itemsAdapter.updateItem(position, new WheelTextSection(s)
@@ -465,6 +483,7 @@ public class WheelSettingsActivity extends AppCompatActivity {
                 wheelView.setWheelSections(newWheelSections);
                 wheelView.generateWheel();
 
+                dialog.dismiss();
             }
         });
 
@@ -476,37 +495,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
     public void shuffleWheel(View view) {
         List<WheelSection> newWheelSections = new ArrayList<>();
 
-        // if (wheelSections.size() > 0) {
-        //     wheelSections.clear();
-        //     itemsAdapter.clear();
-        //
-        //     for (int i = 0; i < 4; i++) {
-        //         int bR = new Random().nextInt(255);
-        //         int bG = new Random().nextInt(255);
-        //         int bB = new Random().nextInt(255);
-        //
-        //         int fR = ~bR;
-        //         int fG = ~bG;
-        //         int fB = ~bB;
-        //         WheelTextSection wts = new WheelTextSection("item #" + (i + 1))
-        //                 .setSectionForegroundColor(Color.rgb(fR, fG, fB))
-        //                 .setSectionBackgroundColor(Color.rgb(bR, bG, bB));
-        //         wheelSections.add(wts);
-        //         itemsAdapter.add(wts);
-        //     }
-        //
-        //     for (WheelSection ws : wheelSections) {
-        //         newWheelSections.add(ws);
-        //     }
-        //
-        //     int preferredSize = newWheelSections.size() * (optionRepeatSB.getProgress() + 1);
-        //
-        //     int difference = preferredSize - newWheelSections.size();
-        //
-        //     for (int i = 0; i < difference; i++) {
-        //         newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
-        //     }
-        // } else {
         for (int i = 0; i < itemsAdapter.getCount(); i++) {
             WheelTextSection item = (WheelTextSection) itemsAdapter.getItem(i);
 
@@ -534,7 +522,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
         for (int i = 0; i < difference; i++) {
             newWheelSections.add(newWheelSections.get(i % newWheelSections.size()));
         }
-        // }
 
         wheelView.setWheelSections(newWheelSections);
 
@@ -635,19 +622,14 @@ public class WheelSettingsActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.hide();
+                dialog.dismiss();
             }
         });
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
                 String s = previewTextView.getText().toString();
-
-                // itemsAdapter.add(new WheelTextSection("Item #" + new Random().nextInt(200))
-                //         .setSectionForegroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)))
-                //         .setSectionBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255))));
 
                 itemsAdapter.add(new WheelTextSection(s)
                         .setSectionForegroundColor(foregroundColor)
@@ -669,6 +651,8 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
                 wheelView.setWheelSections(newWheelSections);
                 wheelView.generateWheel();
+
+                dialog.dismiss();
             }
         });
 
@@ -686,11 +670,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
     }
 
     public void spinWheel(final View view) {
-
-        // final Drawable buttonDrawable = DrawableCompat.wrap(view.getBackground());
-        // DrawableCompat.setTintMode(buttonDrawable, PorterDuff.Mode.SRC_ATOP);
-        // DrawableCompat.setTint(buttonDrawable, 0x55000000);
-
         Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.button_fade_out);
         fadeOut.setDuration(100);
         view.startAnimation(fadeOut);
@@ -702,8 +681,6 @@ public class WheelSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // view.setBackground(buttonDrawable);
-
                 Animation fadeIn = AnimationUtils.loadAnimation(WheelSettingsActivity.this, R.anim.button_fade_in);
                 fadeIn.setDuration(100);
                 view.startAnimation(fadeIn);
@@ -715,16 +692,9 @@ public class WheelSettingsActivity extends AppCompatActivity {
             }
         });
 
-        // if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
-
-        // wheelView.stopWheel();
-
         Bundle extra = new Bundle();
-        // if (itemsAdapter.getItems().size() < 1) {
-        //     extra.putSerializable("sections", (Serializable) wheelSections);
-        // } else {
+
         extra.putSerializable("sections", (Serializable) itemsAdapter.getItems());
-        // }
 
         extra.putInt("textSize", textSizeSB.getProgress());
         extra.putInt("optionRepeat", (optionRepeatSB.getProgress() + 1));
@@ -733,7 +703,32 @@ public class WheelSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(WheelSettingsActivity.this, MainActivity.class);
         intent.putExtra("extra", extra);
         startActivity(intent);
-        // }
+    }
+
+    private void showSnackbar(String text, int foregroundColor, int backgroundColor) {
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.rootLayout), "", Snackbar.LENGTH_SHORT);
+
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+
+        ((Snackbar.SnackbarLayout) snackbar.getView()).removeAllViews();
+
+        snackbar.getView().setBackgroundColor(backgroundColor);
+
+        View snackbarView = WheelSettingsActivity.this.getLayoutInflater().inflate(R.layout.snackbar_view, null);
+
+        View snackBarRootView = snackbarView.findViewById(R.id.snackbarRootView);
+
+        TextView deletedItemNameTV = snackbarView.findViewById(R.id.itemNameTV);
+
+        snackBarRootView.setBackgroundColor(backgroundColor);
+
+        deletedItemNameTV.setTextColor(foregroundColor);
+
+        deletedItemNameTV.setText(text);
+
+        snackbarLayout.addView(snackbarView, 0);
+
+        snackbar.show();
     }
 
     private Point color2Point(int color, float radius) {

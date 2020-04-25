@@ -29,6 +29,6 @@
             android:fontFamily="casual"
             android:textColor="@color/black"
             android:text="sample text"
-            android:textSize="10dp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 </LinearLayout>

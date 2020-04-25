@@ -67,10 +67,10 @@ public class CustomListViewAdapter extends ArrayAdapter<WheelSection> {
             case TEXT:
                 viewHolder.optionTxtName.setText(((WheelTextSection) dataItem).getText());
                 viewHolder.optionTxtName.setTextColor(((WheelTextSection) dataItem).getForegroundColor());
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     viewHolder.optionTxtContainer.setBackgroundTintList(ColorStateList.valueOf(((WheelTextSection) dataItem).getBackgroundColor()));
                 }
-                /*viewHolder.optionTxtContainer.setOnClickListener(this);*/
                 viewHolder.optionTxtContainer.setTag(position);
         }
 

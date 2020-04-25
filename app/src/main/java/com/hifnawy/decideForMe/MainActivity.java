@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -95,52 +92,17 @@ public class MainActivity extends AppCompatActivity {
 
             wheelView.generateWheel();
 
-           wheelView.setInitialFlingDampening(1f);
-           wheelView.setFlingVelocityDampening(1.01f);
+            wheelView.setInitialFlingDampening(1f);
+            wheelView.setFlingVelocityDampening(1.01f);
 
-           // wheelView.flingWheel(1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
             wheelView.flingWheel((spinTime + 1) * 1000, 1000 + (1000 * (int) Math.pow(2, spinTime)), (new Random().nextFloat() > 0.5));
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-       // wheelView.reInit();
-    }
-
-    @Override
-    protected void onPause() {
-       // wheelView.stopWheel();
-
-        super.onPause();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-
-        Log.d("mn3m", "saving state...");
-    }
-
-    @Override
-    public void onBackPressed() {
-       // if (wheelView.getFlingDirection() == FlingDirection.STOPPED) {
-       //     super.onBackPressed();
-       // } else {
-       //     Toast.makeText(this, "please wait until the wheel stops", Toast.LENGTH_SHORT).show();
-       // }
-       // wheelView.stopWheel();
-
-        super.onBackPressed();
     }
 
     private class WheelEventsListener implements com.hifnawy.spinningWheelLib.WheelEventsListener {
 
         @Override
         public void onWheelStopped() {
-           // Toast.makeText(MainActivity.this, "Wheel has just been stopped", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -173,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             if (sectionIndex >= 0) {
                 final float scaleUpFactor = 6f;
                 final float scaleDownFactor = 2f;
+
                 WheelSection section = wheelView.getWheelSections().get(sectionIndex);
                 ObjectAnimator animatorX = ObjectAnimator.ofFloat(textView, "scaleX", textView.getScaleX() + DimensionUtil.convertPixelsToDp(scaleUpFactor));
                 ObjectAnimator animatorY = ObjectAnimator.ofFloat(textView, "scaleY", textView.getScaleY() + DimensionUtil.convertPixelsToDp(scaleUpFactor));
